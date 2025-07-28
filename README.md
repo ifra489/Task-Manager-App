@@ -10,7 +10,7 @@ This is a simple and efficient Android application developed using Java, XML, an
 - Edit and Update Task (Status automatically updates to Ongoing when editing)
 - Delete Task with confirmation dialog
 - Mark Task as Completed
-- Set Reminder Notification (5 minutes after saving)
+- Set Reminder Notification 
 - Category Selection (Work, Personal, Study, etc.)
 - Simple and clean UI
 - Splash Screen and Custom App Icon
@@ -50,4 +50,7 @@ This is a simple and efficient Android application developed using Java, XML, an
 
 ## Developed By
 
-*Ifra Malik*  
+  
+Ifra Malik  
+Intern @ Digital Empowerment Network  
+[GitHub Profile](https://github.com/ifra489)
