@@ -28,12 +28,15 @@ This is a simple and efficient Android application developed using Java, XML, an
   
 ## Screenshots
 
-| Splash Screen | Add Task | Task List |
+| Splash Screen | Add Task | Task List | 
 |---------------|----------|-----------|
-| ![Splash](screenshots/splash.png) | ![Add Task](screenshots/add_task.png) | ![Task List](screenshots/task_list.png) |
-| Edit Task | Delete Task | Reminder Notification |
+| ![Splash](screenshots/splash.jpeg) | ![Add Task](screenshots/add_task.jpeg) | ![Task List](screenshots/task_list.jpeg) |
+| Cateogory | Delete Task | Reminder Notification |
 |-----------|-------------|------------------------|
-| ![Edit](screenshots/edit_task.png) | ![Delete](screenshots/delete_task.png) | ![Reminder](screenshots/reminder.png) |
+| ![Edit](screenshots/category.jpeg) | ![Delete](screenshots/delete_task.jpeg) | ![Reminder](screenshots/reminder.jpeg) |
+| Calender | Priority  | Time|
+|---------------|----------|-----------|
+| ![Calender](screenshots/calendar.jpeg) | ![Priority](screenshots/priority.jpeg) | ![Time](screenshots/time.jpeg) |
 
 ## How to Run the App
 
@@ -47,4 +50,4 @@ This is a simple and efficient Android application developed using Java, XML, an
 
 ## Developed By
 
-*Aiman Malik*  
+*Ifra Malik*  
