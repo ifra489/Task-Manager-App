@@ -55,24 +55,26 @@ This is a simple and efficient Android application developed using Java, XML, an
   
 </table>
 <table>
+   <tr>
+    <td>Calendar Picker</td>
+    <td>Delete Confirmation</td>
+    <td>Reminder Notification</td>
+  </tr>
   <tr>
     <td><img src="screenshots/calendar.jpeg" height="400"></td>
     <td><img src="screenshots/delete_task.jpeg" height="400"></td>
     <td><img src="screenshots/reminder.jpeg" height="400"></td>
   </tr>
-  <tr>
-    <td>Calendar Picker</td>
-    <td>Delete Confirmation</td>
-    <td>Reminder Notification</td>
-  </tr>
+ 
 </table>
 <table>
   <tr>
-    <td><img src="screenshots/finished_task.jpeg" height="400"></td>
+    <td>Finished_Task</td>
     </tr>
   <tr>
-    <td>Calendar Picker</td>
+    <td><img src="screenshots/finished_task.jpeg" height="400"></td>
     </tr>
+  
 </table>
 
 
