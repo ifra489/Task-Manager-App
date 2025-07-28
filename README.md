@@ -28,18 +28,53 @@ This is a simple and efficient Android application developed using Java, XML, an
   
 ## Screenshots
 
-| Splash Screen | Add Task | Task List | 
-|---------------|----------|-----------|
-| ![Splash](screenshots/splash.jpeg) | ![Add Task](screenshots/add_task.jpeg) | ![Task List](screenshots/task_list.jpeg) |
-| Cateogory | Delete Task | Reminder Notification |
-|-----------|-------------|------------------------|
-| ![Edit](screenshots/category.jpeg) | ![Delete](screenshots/delete_task.jpeg) | ![Reminder](screenshots/reminder.jpeg) |
-| Calender | Priority  | Time|
-|---------------|----------|-----------|
-| ![Calender](screenshots/calendar.jpeg) | ![Priority](screenshots/priority.jpeg) | ![Time](screenshots/time.jpeg) |
-| Finished_Task |
-|---------------|
-| ![Finished_task](screenshots/finished_task.jpeg) |
+<table>
+   <tr>
+    <td>Splash Screen</td>
+    <td>Add Task</td>
+    <td>Task List</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/splash.jpeg" height="400"></td>
+    <td><img src="screenshots/add_task.jpeg" height="400"></td>
+    <td><img src="screenshots/task_list.jpeg" height="400"></td>
+  </tr>
+ 
+</table>
+<table>
+  <tr>
+    <td>Category Selection</td>
+    <td>Priority Selection</td>
+    <td>Time Picker</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/category.jpeg" height="400"></td>
+    <td><img src="screenshots/priority.jpeg" height="400"></td>
+    <td><img src="screenshots/time.jpeg" height="400"></td>
+  </tr>
+  
+</table>
+<table>
+  <tr>
+    <td><img src="screenshots/calendar.jpeg" height="400"></td>
+    <td><img src="screenshots/delete_task.jpeg" height="400"></td>
+    <td><img src="screenshots/reminder.jpeg" height="400"></td>
+  </tr>
+  <tr>
+    <td>Calendar Picker</td>
+    <td>Delete Confirmation</td>
+    <td>Reminder Notification</td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <td><img src="screenshots/finished_task.jpeg" height="400"></td>
+    </tr>
+  <tr>
+    <td>Calendar Picker</td>
+    </tr>
+</table>
+
 
 ## How to Run the App
 
