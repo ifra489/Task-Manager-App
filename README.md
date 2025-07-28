@@ -37,6 +37,9 @@ This is a simple and efficient Android application developed using Java, XML, an
 | Calender | Priority  | Time|
 |---------------|----------|-----------|
 | ![Calender](screenshots/calendar.jpeg) | ![Priority](screenshots/priority.jpeg) | ![Time](screenshots/time.jpeg) |
+| Finished_Task |
+|---------------|
+| ![Finished_task](screenshots/finished_task.jpeg) |
 
 ## How to Run the App
 
