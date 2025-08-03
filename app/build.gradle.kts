@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -34,8 +35,14 @@ android {
 dependencies {
 // Room Database
     implementation ("androidx.room:room-runtime:2.6.1")
+    implementation(libs.firebase.auth)
+    implementation(libs.credentials)
+    implementation(libs.credentials.play.services.auth)
+    implementation(libs.googleid)
+    implementation(libs.firebase.database)
     annotationProcessor( "androidx.room:room-compiler:2.6.1")
-
+implementation ("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.lifecycle:lifecycle-viewmodel:2.6.2")
 // (Optional but helpful)
     implementation ("androidx.room:room-ktx:2.6.1")
     implementation(libs.appcompat)

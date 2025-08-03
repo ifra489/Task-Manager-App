@@ -1,5 +1,7 @@
 package com.example.focustrack.activities;
 
+import com.example.focustrack.R;
+
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -17,7 +19,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.focustrack.R;
+
 import com.example.focustrack.model.Task;
 import com.example.focustrack.utils.ReminderReceiver;
 import com.example.focustrack.viewmodel.TaskViewModel;

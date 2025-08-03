@@ -1,4 +1,3 @@
-
 package com.example.focustrack.activities;
 
 import android.content.Intent;
@@ -7,11 +6,12 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.focustrack.utils.SessionManager;
 import com.example.focustrack.R;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int SPLASH_DURATION = 2000; // 2 seconds
+    private static final int SPLASH_DELAY = 2000; // 2 seconds
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +19,13 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            finish(); // close splash screen
-        }, SPLASH_DURATION);
+            SessionManager sessionManager = new SessionManager(this);
+            if (sessionManager.isLoggedIn()) {
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            } else {
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            }
+            finish();
+        }, SPLASH_DELAY);
     }
 }

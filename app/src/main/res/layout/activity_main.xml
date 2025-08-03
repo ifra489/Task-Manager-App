@@ -1,13 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="#FFFFF0"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   >
+    android:background="#FFFFF0"
+    android:orientation="vertical">
+    <!--    &lt;!&ndash;
+     🔹 Welcome + Logout &ndash;&gt;-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <!-- Filter Buttons -->
+        <TextView
+            android:id="@+id/textViewWelcome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:paddingTop="10dp"
+            android:text="Welcome!"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:backgroundTint="@color/red"
+            android:text="Logout"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/userInfoLayout"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:padding="16dp">-->
+    <!--        &lt;!&ndash; First row: Welcome + Logout aligned opposite ends &ndash;&gt;-->
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:padding="16dp">-->
+    <!--            <TextView-->
+    <!--                android:id="@+id/textViewWelcome"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Welcome, "-->
+    <!--                android:textSize="18sp"-->
+    <!--                android:textStyle="bold"-->
+    <!--                android:textColor="#000000"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent" />-->
+    <!--            <Button-->
+    <!--                android:id="@+id/btnLogout"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:text="Logout"-->
+    <!--                android:textColor="#FFFFFF"-->
+    <!--                android:backgroundTint="@color/red"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!-- 🔹 Filter Buttons -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,74 +73,65 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_gravity="center_vertical">
+            android:paddingEnd="16dp">
 
             <Button
                 android:id="@+id/btnAll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="All"
                 android:layout_marginEnd="8dp"
-                app:cornerRadius="30dp"
+                android:text="All"
                 app:backgroundTint="@color/colorAll"
-                />
+                app:cornerRadius="30dp" />
 
             <Button
                 android:id="@+id/btnPending"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pending"
-                app:cornerRadius="30dp"
                 android:layout_marginEnd="8dp"
+                android:text="Pending"
                 app:backgroundTint="@color/colorPending"
-                />
+                app:cornerRadius="30dp" />
 
             <Button
                 android:id="@+id/btnOngoing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ongoing"
-               app:cornerRadius="30dp"
                 android:layout_marginEnd="8dp"
+                android:text="Ongoing"
                 app:backgroundTint="@color/colorOngoing"
-                />
+                app:cornerRadius="30dp" />
 
             <Button
                 android:id="@+id/btnFinished"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Finished"
-                app:cornerRadius="30dp"
                 android:layout_marginEnd="8dp"
-                app:backgroundTint="@color/colorFinished"
-                android:textColor="@android:color/white"/>
-
-
-
-
+                android:text="Finished"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/primary"
+                app:cornerRadius="30dp" />
         </LinearLayout>
     </HorizontalScrollView>
-
-    <!-- RecyclerView -->
+    <!-- 🔹 RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTasks"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:padding="8dp" />
-
-    <!-- FAB -->
+    <!-- 🔹 Floating Action Button -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_margin="16dp"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/purple_700" />
+        app:backgroundTint="@color/purple_700"
+        app:srcCompat="@android:drawable/ic_input_add" />
 </LinearLayout>
