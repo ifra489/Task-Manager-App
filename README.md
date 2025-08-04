@@ -81,9 +81,9 @@ AndroidX + Material Components
     <th>Firebase Auth</th>
   </tr>
   <tr>
-    <td><img src="screenshots/Register.jpeg" height="400"/></td>
+    <td><img src="screenshots/registration.jpeg" height="400"/></td>
     <td><img src="screenshots/login.jpeg" height="400"/></td>
-    <td><img src="screenshots/Firebase Auth.png" height="400"/></td>
+    <td><img src="screenshots/Firebase Auth.PNG" height="400"/></td>
   </tr>
 </table>
 
@@ -96,7 +96,7 @@ AndroidX + Material Components
   <tr>
     <td><img src="screenshots/welcome.jpeg" height="400"/></td>
     <td><img src="screenshots/logout.jpeg" height="400"/></td>
-    <td><img src="screenshots/Realtime DB.png" height="400"/></td>
+    <td><img src="screenshots/Realtime DB.PNG" height="400"/></td>
   </tr>
 </table>
 
