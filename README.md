@@ -1,4 +1,4 @@
-** Personal Task Manager + Firebase Auth (Internship Task 2 & 3) **
+## Personal Task Manager + Firebase Auth (Internship Task 2 & 3) 
 
 ## 🔐 Task 3 – Firebase Authentication + Integration
 
@@ -172,3 +172,10 @@ AndroidX + Material Components
 
 The google-services.json file used to configure Firebase has been excluded from version control for security purposes.
 Make sure to download your own file from Firebase Console and place it inside the app/ directory.
+
+
+## 🙋‍♀️ Developed By
+
+Ifra Malik  
+Intern @ Digital Empowerment Network  
+[GitHub Profile](https://github.com/ifra489)
