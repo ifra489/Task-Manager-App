@@ -89,9 +89,9 @@ AndroidX + Material Components
 
 <table>
   <tr>
-    <th>Realtime DB</th>
     <th>Welcome Message</th>
     <th>Logout Dialog</th>
+    <th>Realtime DB</th>
   </tr>
   <tr>
     <td><img src="screenshots/welcome.jpeg" height="400"/></td>
