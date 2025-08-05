@@ -1,7 +1,5 @@
 package com.example.focustrack.activities;
 
-import com.example.focustrack.R;
-
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -10,21 +8,17 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
-
-
+import com.example.focustrack.R;
 import com.example.focustrack.model.Task;
 import com.example.focustrack.utils.ReminderReceiver;
 import com.example.focustrack.viewmodel.TaskViewModel;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.Calendar;
+import java.util.HashMap;
 
 public class AddEditTaskActivity extends AppCompatActivity {
     private Task currentTask;
@@ -39,20 +33,19 @@ public class AddEditTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_task);
 
-        // Initialize views
+        // UI Bindings
         editTextTitle = findViewById(R.id.editTextTitle);
         editTextDescription = findViewById(R.id.editTextDescription);
         editTextDate = findViewById(R.id.editTextDate);
-        editTextTime = findViewById(R.id.editTextTime); // Add this in XML
+        editTextTime = findViewById(R.id.editTextTime);
         spinnerCategory = findViewById(R.id.spinnerCategory);
         spinnerPriority = findViewById(R.id.spinnerPriority);
         spinnerStatus = findViewById(R.id.spinnerStatus);
         buttonSave = findViewById(R.id.buttonSave);
 
-        // ViewModel
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
 
-        // Notification permission (Android 13+)
+        // Notification permission
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
                     != PackageManager.PERMISSION_GRANTED) {
@@ -60,56 +53,29 @@ public class AddEditTaskActivity extends AppCompatActivity {
             }
         }
 
-        // 🟢 Time Picker
         editTextTime.setOnClickListener(v -> {
-            final Calendar calendar = Calendar.getInstance();
-            int hour = calendar.get(Calendar.HOUR_OF_DAY);
-            int minute = calendar.get(Calendar.MINUTE);
-
-            TimePickerDialog timePickerDialog = new TimePickerDialog(this,
-                    (view, selectedHour, selectedMinute) -> {
-                        String time = String.format("%02d:%02d", selectedHour, selectedMinute);
-                        editTextTime.setText(time);
-                    }, hour, minute, true);
-
-            timePickerDialog.show();
+            Calendar cal = Calendar.getInstance();
+            TimePickerDialog tpd = new TimePickerDialog(this, (view, hour, minute) -> {
+                String time = String.format("%02d:%02d", hour, minute);
+                editTextTime.setText(time);
+            }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true);
+            tpd.show();
         });
 
-        // Date Picker
         editTextDate.setOnClickListener(v -> {
-            final Calendar calendar = Calendar.getInstance();
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    this,
-                    (view, selectedYear, selectedMonth, selectedDay) -> {
-                        String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
-                        editTextDate.setText(selectedDate);
-                    },
-                    year, month, day
-            );
-            datePickerDialog.show();
+            Calendar cal = Calendar.getInstance();
+            DatePickerDialog dpd = new DatePickerDialog(this, (view, y, m, d) -> {
+                editTextDate.setText(d + "/" + (m + 1) + "/" + y);
+            }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
+            dpd.show();
         });
 
-        // Spinner Setup
-        ArrayAdapter<CharSequence> priorityAdapter = ArrayAdapter.createFromResource(
-                this, R.array.priority_array, android.R.layout.simple_spinner_item);
-        priorityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerPriority.setAdapter(priorityAdapter);
+        // Adapters
+        setSpinner(spinnerPriority, R.array.priority_array);
+        setSpinner(spinnerStatus, R.array.status_array);
+        setSpinner(spinnerCategory, R.array.category_options);
 
-        ArrayAdapter<CharSequence> statusAdapter = ArrayAdapter.createFromResource(
-                this, R.array.status_array, android.R.layout.simple_spinner_item);
-        statusAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerStatus.setAdapter(statusAdapter);
-
-        ArrayAdapter<CharSequence> categoryAdapter = ArrayAdapter.createFromResource(
-                this, R.array.category_options, android.R.layout.simple_spinner_item);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(categoryAdapter);
-
-        // Edit Mode
+        // Edit mode
         taskId = getIntent().getIntExtra("taskId", -1);
         if (taskId != -1) {
             taskViewModel.getTaskById(taskId).observe(this, task -> {
@@ -120,7 +86,7 @@ public class AddEditTaskActivity extends AppCompatActivity {
                     editTextDate.setText(task.getDate());
                     spinnerPriority.setSelection(getIndex(spinnerPriority, task.getPriority()));
                     spinnerCategory.setSelection(getIndex(spinnerCategory, task.getCategory()));
-                    spinnerStatus.setSelection(getIndex(spinnerStatus, "Ongoing")); // Auto-set
+                    spinnerStatus.setSelection(getIndex(spinnerStatus, "Ongoing"));
                 }
             });
         } else {
@@ -128,49 +94,78 @@ public class AddEditTaskActivity extends AppCompatActivity {
             spinnerStatus.setEnabled(false);
         }
 
-        // Save Button Logic
+        // Save task
         buttonSave.setOnClickListener(v -> {
             String title = editTextTitle.getText().toString();
-            String description = editTextDescription.getText().toString();
+            String desc = editTextDescription.getText().toString();
             String date = editTextDate.getText().toString();
+            String time = editTextTime.getText().toString();
             String priority = spinnerPriority.getSelectedItem().toString();
             String status = spinnerStatus.getSelectedItem().toString();
             String category = spinnerCategory.getSelectedItem().toString();
 
-            if (title.isEmpty() || description.isEmpty() || date.isEmpty()) {
+            if (title.isEmpty() || desc.isEmpty() || date.isEmpty()) {
                 Toast.makeText(this, "Please fill all required fields", Toast.LENGTH_SHORT).show();
-            } else {
-                if (currentTask != null) {
-                    currentTask.setTitle(title);
-                    currentTask.setDescription(description);
-                    currentTask.setDate(date);
-                    currentTask.setPriority(priority);
-                    currentTask.setStatus(status);
-                    currentTask.setCategory(category);
-
-                    taskViewModel.update(currentTask);
-                    Toast.makeText(this, "Task Updated", Toast.LENGTH_SHORT).show();
-                } else {
-                    Task newTask = new Task(title, description, date, priority, status, category);
-                    taskViewModel.insert(newTask);
-                    Toast.makeText(this, "Task Saved", Toast.LENGTH_SHORT).show();
-
-                    // ✅ Schedule Reminder after 2 hours
-                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    Intent intent = new Intent(this, ReminderReceiver.class);
-                    intent.putExtra("title", title);
-                    intent.putExtra("desc", description);
-
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
-
-                    Calendar reminderTime = Calendar.getInstance();
-                    reminderTime.add(Calendar.HOUR_OF_DAY, 4);
-
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, reminderTime.getTimeInMillis(), pendingIntent);
-                }
-                finish();
+                return;
             }
+
+            if (currentTask != null) {
+                // Update Room DB only
+                currentTask.setTitle(title);
+                currentTask.setDescription(desc);
+                currentTask.setDate(date);
+                currentTask.setPriority(priority);
+                currentTask.setStatus(status);
+                currentTask.setCategory(category);
+
+                taskViewModel.update(currentTask);
+                Toast.makeText(this, "Task Updated", Toast.LENGTH_SHORT).show();
+            } else {
+                // Save to Room
+                Task task = new Task(title, desc, date, priority, status, category);
+                taskViewModel.insert(task);
+
+                // 🔹 Save to Firebase (Per User)
+                String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String taskKey = FirebaseDatabase.getInstance().getReference()
+                        .child("tasks").child(uid).push().getKey();
+
+                HashMap<String, Object> taskMap = new HashMap<>();
+                taskMap.put("title", title);
+                taskMap.put("description", desc);
+                taskMap.put("date", date);
+                taskMap.put("priority", priority);
+                taskMap.put("status", status);
+                taskMap.put("category", category);
+
+                FirebaseDatabase.getInstance().getReference("tasks")
+                        .child(uid)
+                        .child(taskKey)
+                        .setValue(taskMap);
+
+                // Reminder
+                AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+                Intent i = new Intent(this, ReminderReceiver.class);
+                i.putExtra("title", title);
+                i.putExtra("desc", desc);
+
+                PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, PendingIntent.FLAG_IMMUTABLE);
+                Calendar reminderTime = Calendar.getInstance();
+                reminderTime.add(Calendar.HOUR_OF_DAY, 2);
+                am.setExact(AlarmManager.RTC_WAKEUP, reminderTime.getTimeInMillis(), pi);
+
+                Toast.makeText(this, "Task Saved", Toast.LENGTH_SHORT).show();
+            }
+
+            finish();
         });
+    }
+
+    private void setSpinner(Spinner spinner, int arrayResId) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this, arrayResId, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
     private int getIndex(Spinner spinner, String value) {
